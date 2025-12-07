@@ -20,7 +20,6 @@ team_df_cleaned.rename(columns={
     'TEAM_ABBREVIATION': 'Team'
 }, inplace=True)
 
-# 3. Aggregate by Team and Season (Calculating Wins/Losses)
 # We use the 'WL' column to create counts of total wins and total games played.
 
 # Map 'W' (Win) to 1 and 'L' (Loss) to 0
@@ -35,7 +34,6 @@ team_agg_initial = team_df_cleaned.groupby(['Season', 'Team']).agg(
 # Calculate Total Losses and Rank (Assuming Rank needs to be calculated manually or from a separate column if available)
 team_agg_initial['Total_Losses'] = team_agg_initial['Total_Games'] - team_agg_initial['Total_Wins']
 
-# NOTE: Since 'Rank' is not explicitly available, we must calculate it based on Win Pct.
 team_agg_initial['Win_Pct'] = team_agg_initial['Total_Wins'] / team_agg_initial['Total_Games']
 
 # Calculate Rank (Lower Win_Pct gets higher rank number)
@@ -54,7 +52,7 @@ team_rank_pivot = team_agg_initial.pivot_table(
 
 
 team_2022_2023 = team_agg_initial[
-    team_agg_initial['Season'] == '2020-21' # Use '2020-21' or whatever season is 2022-2023 in the data
+    team_agg_initial['Season'] == '2022-23' 
 ].copy()
 
 final_team_data = team_2022_2023[['Team', 'Avg_Rank', 'Win_Pct']].copy()
